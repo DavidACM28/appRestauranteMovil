@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ElLimonysuCausa </string>
+    <string name="desc_user">Perfil de usuario</string>
+    <string name="desc_categories">Menú de categorías</string>
+    <string name="desc_home">Volver al inicio</string>
+    <string name="desc_cart">Carrito de compras</string>
+    <string name="desc_settings">Configuración de la aplicación</string>
+</resources>

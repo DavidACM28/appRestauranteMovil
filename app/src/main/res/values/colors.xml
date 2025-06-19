@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#181612</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="verde_limon">#A9B81C</color>
+    <color name="amarillo">#EDC907</color>
+    <color name="gris">#62605B</color>
+
+</resources>

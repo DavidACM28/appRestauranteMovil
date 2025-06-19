@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="6"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5.55">
+        <LinearLayout
+            android:id="@+id/lyMesas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="5"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:text="Carrito"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:orientation="horizontal"
+                android:paddingHorizontal="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Mesas"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Totales"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMesas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3.9"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lyDetalleMesa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:visibility="invisible"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5">
+                <ImageButton
+                    android:id="@+id/btnAtras"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/atras"
+                    android:scaleType="center"
+                    android:backgroundTint="@color/black"
+                    android:contentDescription="Atras"/>
+                <TextView
+                    android:id="@+id/tvMesa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Mesa 2"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProductos"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3.9"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:paddingHorizontal="20dp">
+                <Button
+                    android:id="@+id/btnFinalizar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Finalizar pedido"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="@color/verde_limon"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    />
+                <Button
+                    android:id="@+id/btnEnviar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Enviar faltantes a cocina"
+                    android:backgroundTint="@color/verde_limon"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lyFinalizar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:visibility="invisible"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                >
+                <ImageButton
+                    android:id="@+id/btnAtrasFinalizar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/atras"
+                    android:scaleType="center"
+                    android:backgroundTint="@color/black"
+                    android:contentDescription="Atras"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Finalizar Pedido"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvMesaFinalizar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:text="Mesa 2"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.4"
+                android:orientation="vertical"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="30dp"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+                    <TextView
+                        android:id="@+id/tvTipoComprobante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de comprobante"
+                        android:textSize="18sp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/white"/>
+
+                    <Spinner
+                        android:id="@+id/spTipoComprobante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/tvMedioPago"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Medio de pago"
+                        android:textSize="18sp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/white"/>
+
+                    <Spinner
+                        android:id="@+id/spMedioPago"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="Numero de Ruc o documento de identidad"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"/>
+            <EditText
+                android:id="@+id/etDocumento"
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:textColorHint="@color/gris"
+                android:textColor="@color/white"
+                android:hint="Ruc o documento de identidad"
+                />
+            <CheckBox
+                android:id="@+id/cbSinDocumento"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="Sin documento"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:buttonTint="@color/verde_limon"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"/>
+            <Button
+                android:id="@+id/btnConsultar"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.35"
+                android:textSize="18sp"
+                android:text="Consultar"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/verde_limon"/>
+            <TextView
+                android:id="@+id/tvCliente"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="5dp">
+                <Button
+                    android:id="@+id/btnImprimirCuenta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="Imprimir cuenta"
+                    android:textSize="16dp"
+                    android:backgroundTint="@color/verde_limon"
+                    android:layout_alignParentBottom="true"
+                    />
+                <Button
+                    android:id="@+id/btnTerminarPedido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="Terminar pedido"
+                    android:textSize="16dp"
+                    android:backgroundTint="@color/verde_limon"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.45"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_rounded_navbar"
+        android:elevation="8dp"
+        android:paddingHorizontal="8dp">
+
+        <!-- Botón Usuario -->
+        <ImageButton
+            android:id="@+id/btnUser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/user"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_user" />
+
+        <!-- Botón Categorías -->
+        <ImageButton
+            android:id="@+id/btnCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/categorias"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_categories" />
+
+        <!-- Botón Home (centrado) -->
+
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_home" />
+
+
+        <!-- Botón Carrito -->
+        <ImageButton
+            android:id="@+id/btnCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/carrito"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_cart"/>
+
+        <!-- Botón Ajustes -->
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ajustes"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_settings" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="30dp"
+    android:background="@color/black"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingHorizontal="5dp"
+        android:background="@drawable/bg_mesa_carrito"
+        >
+        <TextView
+            android:id="@+id/tvMesaCarrito"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="mesa 1"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+
+            />
+        <TextView
+            android:id="@+id/tvPrecioCarrito"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="S/.30"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textAlignment="viewEnd"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

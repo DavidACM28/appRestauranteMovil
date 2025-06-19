@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="@color/black">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="¡Regístrate Ahora!"
+        android:fontFamily="@font/lunasima"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <!-- Logo centrado -->
+
+    <!-- Campos de usuario y contraseña -->
+    <ImageView
+        android:id="@+id/ivLogoRegister"
+        android:layout_width="236dp"
+        android:layout_height="230dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/limon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="48dp"
+        android:background="@drawable/lila_border"
+        android:layout_marginBottom="10dp"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/usuario"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/etUsernameRegister"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Usuario"
+            android:inputType="text"
+            android:textColorHint="@color/gris"
+            android:textStyle="italic"
+            android:importantForAutofill="yes"
+            android:autofillHints="username"
+            android:background="@null"
+            android:paddingStart="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="48dp"
+        android:background="@drawable/lila_border"
+        android:layout_marginBottom="20dp"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/password"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/etPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColorHint="@color/gris"
+            android:textStyle="italic"
+            android:importantForAutofill="yes"
+            android:autofillHints="newPassword"
+            android:background="@null"
+            android:paddingStart="8dp"/>
+    </LinearLayout>
+
+
+
+    <!-- Botón de Registrarse -->
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/verde_limon"
+        android:text="Registrarse"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+
+    <!-- Enlace "¿Ya tienes cuenta?" -->
+    <TextView
+        android:id="@+id/tvLoginLink"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="¿Ya tienes cuenta? Inicia Sesión"
+        android:textColor="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="30dp"/>
+
+
+</LinearLayout>

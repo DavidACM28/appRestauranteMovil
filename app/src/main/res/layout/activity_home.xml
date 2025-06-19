@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- 1. Encabezado con saludo -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hola "
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:textColor="@color/verde_limon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buen Inicio De Turno"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <!-- 2. Grid de Mesas -->
+    <GridView
+        android:id="@+id/gridMesas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:numColumns="2"
+        android:verticalSpacing="16dp"
+        android:horizontalSpacing="16dp"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:layout_above="@+id/bottom_nav_container"/>
+
+    <!-- Contenedor principal de la barra de navegación -->
+    <LinearLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_rounded_navbar"
+        android:elevation="8dp"
+        android:paddingHorizontal="8dp">
+
+        <!-- Botón Usuario -->
+        <ImageButton
+            android:id="@+id/btnUser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/user"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_user" />
+
+        <!-- Botón Categorías -->
+        <ImageButton
+            android:id="@+id/btnCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/categorias"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_categories" />
+
+        <!-- Botón Home (centrado) -->
+
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_home" />
+
+
+        <!-- Botón Carrito -->
+        <ImageButton
+            android:id="@+id/btnCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/carrito"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_cart"/>
+
+        <!-- Botón Ajustes -->
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ajustes"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_settings" />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

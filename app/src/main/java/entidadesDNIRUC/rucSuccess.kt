@@ -1,0 +1,30 @@
+package entidadesDNIRUC
+
+data class rucSuccess(
+    val actEconomicas: List<Any>,
+    val actExterior: Any,
+    val capital: Any,
+    val condicion: String,
+    val cpPago: List<Any>,
+    val cpeElectronico: List<Any>,
+    val departamento: Any,
+    val direccion: Any,
+    val distrito: Any,
+    val estado: String,
+    val fechaBaja: Any,
+    val fechaEmisorFe: Any,
+    val fechaInscripcion: Any,
+    val fechaPle: Any,
+    val nombreComercial: Any,
+    val padrones: List<Any>,
+    val profesion: Any,
+    val provincia: Any,
+    val razonSocial: String,
+    val ruc: String,
+    val sistContabilidad: Any,
+    val sistElectronica: List<Any>,
+    val sistEmsion: Any,
+    val telefonos: List<Any>,
+    val tipo: Any,
+    val ubigeo: Any
+)
