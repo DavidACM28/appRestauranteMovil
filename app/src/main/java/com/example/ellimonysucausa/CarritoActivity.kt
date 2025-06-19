@@ -137,6 +137,7 @@ class CarritoActivity : AppCompatActivity() {
             createData3(mesa)
         }
         btnConfirmarSeguro.setOnClickListener(){
+            actualizarVarios()
             binding.tvMesaFinalizar.text = "Mesa ${mesa}"
             binding.etDocumento.setText("")
             binding.tvCliente.text = ""
@@ -175,6 +176,9 @@ class CarritoActivity : AppCompatActivity() {
         }
         btnCancelarEntregar.setOnClickListener(){
             dialog2.hide()
+        }
+        btnCancelarSeguro.setOnClickListener(){
+            dialog3.hide()
         }
         btnEliminar.setOnClickListener(){
             if (item2.size == 1){
@@ -225,6 +229,12 @@ class CarritoActivity : AppCompatActivity() {
                         return@setOnClickListener
                     }
                 }
+                binding.tvMesaFinalizar.text = "Mesa ${mesa}"
+                binding.etDocumento.setText("")
+                binding.tvCliente.text = ""
+                binding.lyDetalleMesa.visibility = View.INVISIBLE
+                binding.lyFinalizar.visibility = View.VISIBLE
+                dialog3.hide()
             }
         }
         binding.cbSinDocumento.setOnCheckedChangeListener(){_, isChecked->
@@ -275,7 +285,6 @@ class CarritoActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun initRecyclerView(){
         binding.rvMesas.apply {
             layoutManager = LinearLayoutManager(this@CarritoActivity)
@@ -865,6 +874,18 @@ class CarritoActivity : AppCompatActivity() {
                     Toast.makeText(this@CarritoActivity, "No se pudo generar la factura", Toast.LENGTH_SHORT).show()
                 }
                 return@launch
+            }
+        }
+    }
+    private fun actualizarVarios(){
+        val listaFiltrada = item2.filter { it.estadoPedido.idEstadoPedido != 9 }
+        CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch{
+            val call =getRetrofit().create(APIService::class.java).actualizarVarios(listaFiltrada, "detalle/actualizarVarios")
+            runOnUiThread {
+                if (call.isSuccessful){
+                    Toast.makeText(this@CarritoActivity, "Productos marcados como entregados", Toast.LENGTH_SHORT).show()
+                    createData3(mesa)
+                }
             }
         }
     }

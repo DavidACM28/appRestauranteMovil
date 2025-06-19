@@ -17,7 +17,6 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Url
 import kotlin.collections.ArrayList
@@ -49,9 +48,10 @@ interface APIService {
     suspend fun loginVenta(@Body login: login, @Url url:String):Response<loginBoletaResponse>
     @POST
     suspend fun reservarCorrelativo(@Body venta: venta, @Url url:String):Response<ventaResponse>
-    //@Headers("Content-Type: application/json")
     @POST
     suspend fun generarComprobante(@Body comprobanteBody: comprobanteBody, @Url url:String):Response<comprobanteSuccessResponse>
     @POST
     suspend fun generarVenta(@Body venta: ventaResponse, @Url url:String):Response<Unit>
+    @POST
+    suspend fun actualizarVarios(@Body detalles: List<detalleResponse>, @Url url:String):Response<Unit>
 }
