@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ellimonysucausa.databinding.ActivityCarritoBinding
 import com.google.gson.Gson
@@ -88,6 +89,7 @@ class CarritoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCarritoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         trabajador = intent.getSerializableExtra("trabajador", trabajador::class.java)!!
         val listaMedioPago = arrayListOf("Efectivo", "Billetera electronica", "Tarjeta")
         val listaTipoComprobante = arrayListOf("Boleta", "Factura")
@@ -204,7 +206,17 @@ class CarritoActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnEnviar.setOnClickListener(){
-            actualizarEstado()
+            if (item2.isEmpty())
+                Toast.makeText(this, "No hay productos para enviar a cocina", Toast.LENGTH_SHORT).show()
+            else{
+                for (i in item2){
+                    if (i.estadoPedido.descripcionEstadoPedido == "Añadido"){
+                        actualizarEstado()
+                        return@setOnClickListener
+                    }
+                }
+                Toast.makeText(this, "No hay productos para enviar a cocina", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnAtras.setOnClickListener(){
             binding.lyMesas.visibility = View.VISIBLE
@@ -264,7 +276,8 @@ class CarritoActivity : AppCompatActivity() {
 
         }
         binding.btnConsultar.setOnClickListener(){
-            consultarDocumento(binding.etDocumento.text.toString(), (binding.spTipoComprobante.selectedItem as? Int)!!)
+            if(!binding.cbSinDocumento.isChecked)
+                consultarDocumento(binding.etDocumento.text.toString(), (binding.spTipoComprobante.selectedItem as? Int)!!)
         }
         binding.btnTerminarPedido.setOnClickListener(){
             if(binding.spTipoComprobante.selectedItem as? Int == 0) {
@@ -303,7 +316,7 @@ class CarritoActivity : AppCompatActivity() {
     }
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("https://proyectorestauranteback.onrender.com/")
             .addConverterFactory((GsonConverterFactory.create()))
             .client(getClient())
             .build()

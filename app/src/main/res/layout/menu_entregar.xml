@@ -79,6 +79,7 @@
                 android:text="Confirmar"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 />
             <Button
                 android:id="@+id/btnCancelarEntregar"
@@ -89,6 +90,7 @@
                 android:text="Cancelar"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 />
         </RelativeLayout>
     </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.ellimonysucausa.databinding.ActivityHomeBinding
 import entidades.trabajador
 
@@ -17,8 +18,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         sharedPreferences = getSharedPreferences("loginref", MODE_PRIVATE)
-
         val trabajador = intent.getSerializableExtra("trabajador", trabajador::class.java)
         val token = intent.getStringExtra("token")
         // 1. Mostrar nombre de usuario

@@ -15,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,6 +64,7 @@ class CategoriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         listaFiltrada = ArrayList()
         listaCategorias = ArrayList()
         item = ArrayList()
@@ -157,14 +159,14 @@ class CategoriesActivity : AppCompatActivity() {
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("https://proyectorestauranteback.onrender.com/")
             .addConverterFactory(NullOnEmptyConverterFactory(GsonConverterFactory.create()))
             .client(getClient())
             .build()
     }
     private fun getRetrofit2(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("https://proyectorestauranteback.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(getClient())
             .build()

@@ -21,7 +21,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"/>
+                android:layout_weight="0.1"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -60,7 +60,7 @@
                 android:id="@+id/rvMesas"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3.9"/>
+                android:layout_weight="4.1"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/lyDetalleMesa"
@@ -115,8 +115,9 @@
                     android:text="Finalizar pedido"
                     android:layout_alignParentRight="true"
                     android:backgroundTint="@color/verde_limon"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
+                    android:textColor="@color/white"
                     />
                 <Button
                     android:id="@+id/btnEnviar"
@@ -126,7 +127,8 @@
                     android:backgroundTint="@color/verde_limon"
                     android:textStyle="bold"
                     android:layout_alignParentLeft="true"
-                    android:textSize="14sp" />
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -277,7 +279,8 @@
                 android:textSize="18sp"
                 android:text="Consultar"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/verde_limon"/>
+                android:backgroundTint="@color/verde_limon"
+                android:textColor="@color/white"/>
             <TextView
                 android:id="@+id/tvCliente"
                 android:layout_width="match_parent"
@@ -303,6 +306,7 @@
                     android:textSize="16dp"
                     android:backgroundTint="@color/verde_limon"
                     android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
                     />
                 <Button
                     android:id="@+id/btnTerminarPedido"
@@ -313,6 +317,7 @@
                     android:backgroundTint="@color/verde_limon"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
                     />
 
             </RelativeLayout>

@@ -11,7 +11,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"/>
+        android:layout_weight="0.1"/>
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
         android:id="@+id/rvCategories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4.15"
+        android:layout_weight="4.25"
         android:clipToPadding="false"
         android:padding="8dp"
         app:spanCount="2" />

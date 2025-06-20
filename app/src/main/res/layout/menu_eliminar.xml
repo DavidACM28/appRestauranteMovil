@@ -80,6 +80,7 @@
                 android:text="Eliminar"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 />
             <Button
                 android:id="@+id/btnCancelar"
@@ -90,6 +91,7 @@
                 android:text="Cancelar"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 />
         </RelativeLayout>
     </LinearLayout>

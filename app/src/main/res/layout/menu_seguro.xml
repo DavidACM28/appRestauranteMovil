@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingHorizontal="60dp">
+            android:paddingHorizontal="40dp">
             <Button
                 android:id="@+id/btnConfirmarSeguro"
                 android:layout_width="wrap_content"
@@ -79,7 +79,9 @@
                 android:text="Confirmar"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 />
+
             <Button
                 android:id="@+id/btnCancelarSeguro"
                 android:layout_width="wrap_content"
@@ -89,6 +91,7 @@
                 android:text="Cancelar"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 />
         </RelativeLayout>
     </LinearLayout>

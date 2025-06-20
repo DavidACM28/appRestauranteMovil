@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.ellimonysucausa.databinding.ActivityLoginBinding
 import entidades.dtoLogin
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         sharedPreferences = getSharedPreferences("loginref", MODE_PRIVATE)
         editor = sharedPreferences.edit()
 
@@ -40,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun getRetrofit():Retrofit{
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("https://proyectorestauranteback.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
