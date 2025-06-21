@@ -4,9 +4,16 @@ import Adapters.MesaCarritoAdapter
 import Adapters.PlatoCarritoAdapter
 import Adapters.SpinnerAdapter
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.print.PageRange
+import android.print.PrintAttributes
+import android.print.PrintManager
+import android.print.pdf.PrintedPdfDocument
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -49,6 +56,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import utilidades.APIService
 import utilidades.HeaderInterceptor
 import utilidades.NullOnEmptyConverterFactory
+import java.io.FileOutputStream
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -281,8 +289,10 @@ class CarritoActivity : AppCompatActivity() {
         }
         binding.btnTerminarPedido.setOnClickListener(){
             if(binding.spTipoComprobante.selectedItem as? Int == 0) {
-                if ((!binding.cbSinDocumento.isChecked && binding.tvCliente.text != "" && binding.etDocumento.length() == 8) || binding.cbSinDocumento.isChecked)
+                if ((!binding.cbSinDocumento.isChecked && binding.tvCliente.text != "" && binding.etDocumento.length() == 8) || binding.cbSinDocumento.isChecked) {
                     enviarBoleta(binding.spMedioPago.selectedItem as Int)
+                }
+
                 else{
                     Toast.makeText(this, "Si deseas hacer una boleta sin datos de cliente, marca la casilla", Toast.LENGTH_LONG).show()
                 }
@@ -296,6 +306,9 @@ class CarritoActivity : AppCompatActivity() {
                 else
                     enviarFactura(binding.spMedioPago.selectedItem as Int)
             }
+        }
+        binding.btnImprimirCuenta.setOnClickListener(){
+            imprimirCuentaConImpresoraNormal(this)
         }
     }
     private fun initRecyclerView(){
@@ -901,6 +914,78 @@ class CarritoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    private fun imprimirCuentaConImpresoraNormal(context: Context) {
+        val printManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
+
+        val printAdapter = object : android.print.PrintDocumentAdapter() {
+
+            var printAttributes: PrintAttributes? = null
+
+            override fun onLayout(
+                oldAttributes: PrintAttributes?,
+                newAttributes: PrintAttributes?,
+                cancellationSignal: android.os.CancellationSignal?,
+                callback: LayoutResultCallback?,
+                extras: android.os.Bundle?
+            ) {
+
+                printAttributes = newAttributes
+
+                callback?.onLayoutFinished(
+                    android.print.PrintDocumentInfo.Builder("Cuenta_mesa_${mesa}.pdf")
+                        .setContentType(android.print.PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
+                        .build(),
+                    true
+                )
+            }
+
+            override fun onWrite(
+                pages: Array<PageRange>,
+                destination: android.os.ParcelFileDescriptor,
+                cancellationSignal: android.os.CancellationSignal,
+                callback: WriteResultCallback
+            ) {
+                try {
+                    val pdfDocument = PrintedPdfDocument(context, printAttributes!!)
+                    val page = pdfDocument.startPage(0)
+
+                    val canvas: Canvas = page.canvas
+                    val paint = Paint()
+                    paint.textSize = 14f
+
+                    var y = 50f
+                    canvas.drawText("Cuenta", 40f, y, paint)
+                    y += 30f
+                    canvas.drawText("Mesa: $mesa", 40f, y, paint)
+                    y += 30f
+                    canvas.drawText("-------------------------------------", 40f, y, paint)
+                    y += 30f
+
+                    var total = 0.0
+                    for (item in item2) {
+                        total += item.producto.precioProducto!!
+                        val line = "1 x ${item.producto.nombreProducto} --- S/.${"%.2f".format(item.producto.precioProducto)}"
+                        canvas.drawText(line, 40f, y, paint)
+                        y += 25f
+                    }
+
+                    y += 20f
+                    canvas.drawText("TOTAL: S/.${"%.2f".format(totalPedido)}", 40f, y, paint)
+                    pdfDocument.finishPage(page)
+                    val outputStream = FileOutputStream(destination.fileDescriptor)
+                    pdfDocument.writeTo(outputStream)
+                    pdfDocument.close()
+                    callback.onWriteFinished(arrayOf(PageRange.ALL_PAGES))
+                }catch (e:Exception){
+                    e.printStackTrace()
+                    callback.onWriteFailed(e.message)
+                }
+
+            }
+        }
+
+        printManager.print("Cuenta de la mesa: $mesa", printAdapter, null)
     }
 
 }
