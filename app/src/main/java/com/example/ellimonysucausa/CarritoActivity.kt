@@ -6,12 +6,16 @@ import Adapters.SpinnerAdapter
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import android.print.PageRange
 import android.print.PrintAttributes
+import android.print.PrintDocumentAdapter
+import android.print.PrintDocumentInfo
 import android.print.PrintManager
 import android.print.pdf.PrintedPdfDocument
 import android.view.View
@@ -42,6 +46,7 @@ import entidadesPago.Detail
 import entidadesPago.FormaPago
 import entidadesPago.Legend
 import entidadesPago.comprobanteBody
+import entidadesPago.generarQRBody
 import entidadesPago.login
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -308,7 +313,7 @@ class CarritoActivity : AppCompatActivity() {
             }
         }
         binding.btnImprimirCuenta.setOnClickListener(){
-            imprimirCuentaConImpresoraNormal(this)
+            imprimirCuenta(this)
         }
     }
     private fun initRecyclerView(){
@@ -713,16 +718,33 @@ class CarritoActivity : AppCompatActivity() {
             legends = legends
         )
     }
+    private fun crearQRBody(comprobanteBody: comprobanteBody):generarQRBody{
+        val qrBody = generarQRBody(
+            ruc =  comprobanteBody.company.ruc.toString(),
+            tipo =  comprobanteBody.client.tipoDoc,
+            serie =  comprobanteBody.serie,
+            numero =  comprobanteBody.correlativo,
+            emision =  comprobanteBody.fechaEmision,
+            igv =  comprobanteBody.mtoIGV,
+            total = comprobanteBody.mtoImpVenta,
+            clienteTipo =  comprobanteBody.tipoDoc,
+            clienteNumero =  comprobanteBody.client.numDoc.toString()
+            )
+        return qrBody
+    }
     private fun enviarBoleta(idMedio:Int){
         val boleta = crearBoleta()
         val venta = venta()
         var ventaResponse:ventaResponse
+        var qrBody:generarQRBody
+        var svgString:String
         CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch{
             val call2 = getRetrofit().create(APIService::class.java).reservarCorrelativo(venta,"venta/nuevoVenta")
             if(call2.isSuccessful){
                 val correlativoFormateado = String.format(Locale.US,"%08d", call2.body()!!.idVenta)
                 ventaResponse = ventaResponse(call2.body()!!.idVenta)
                 boleta.correlativo = correlativoFormateado
+                qrBody = crearQRBody(boleta)
             }
             else{
                 runOnUiThread {
@@ -731,18 +753,21 @@ class CarritoActivity : AppCompatActivity() {
                 return@launch
             }
             val call = getRetrofit4().create(APIService::class.java).generarComprobante(boleta,"invoice/send")
-            if (call.isSuccessful){
+            val call3 = getRetrofit4().create(APIService::class.java).generarQR(qrBody,"sale/qr")
+            if (call.isSuccessful && call3.isSuccessful){
                 ventaResponse.pedidoResponse = pedidoResponse(idPedido = idPedido)
                 ventaResponse.tipoPago = tipoPago(idMedio + 1)
                 ventaResponse.tipoComprobante = tipoComprobante(1)
-                val call = getRetrofit().create(APIService::class.java).generarVenta(ventaResponse,"venta/actualizarVenta")
+                svgString = call3.body()?.string() ?: return@launch
+                val call4 = getRetrofit().create(APIService::class.java).generarVenta(ventaResponse,"venta/actualizarVenta")
                 runOnUiThread {
-                    if(call.isSuccessful){
+                    if(call4.isSuccessful){
                         Toast.makeText(this@CarritoActivity, "Venta generada", Toast.LENGTH_SHORT).show()
                         intent = Intent(this@CarritoActivity, HomeActivity::class.java)
                         intent.putExtra("trabajador", trabajador)
                         intent.putExtra("token", token)
                         startActivity(intent)
+                        imprimirComprobante(this@CarritoActivity, svgString, boleta)
                     }
                     else{
                         Toast.makeText(this@CarritoActivity, "No se pudo generar la boleta", Toast.LENGTH_SHORT).show()
@@ -863,12 +888,15 @@ class CarritoActivity : AppCompatActivity() {
         val factura = crearFactura()
         val venta = venta()
         var ventaResponse:ventaResponse
+        var qrBody:generarQRBody
+        var svgString:String
         CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch{
             val call2 = getRetrofit().create(APIService::class.java).reservarCorrelativo(venta,"venta/nuevoVenta")
             if(call2.isSuccessful){
                 val correlativoFormateado = String.format(Locale.US,"%08d", call2.body()!!.idVenta)
                 ventaResponse = ventaResponse(call2.body()!!.idVenta)
                 factura.correlativo = correlativoFormateado
+                qrBody = crearQRBody(factura)
             }
             else{
                 runOnUiThread {
@@ -877,18 +905,21 @@ class CarritoActivity : AppCompatActivity() {
                 return@launch
             }
             val call = getRetrofit4().create(APIService::class.java).generarComprobante(factura,"invoice/send")
-            if (call.isSuccessful){
+            val call3 = getRetrofit4().create(APIService::class.java).generarQR(qrBody,"sale/qr")
+            if (call.isSuccessful && call3.isSuccessful){
                 ventaResponse.pedidoResponse = pedidoResponse(idPedido = idPedido)
                 ventaResponse.tipoPago = tipoPago(idMedio + 1)
                 ventaResponse.tipoComprobante = tipoComprobante(3)
-                val call = getRetrofit().create(APIService::class.java).generarVenta(ventaResponse,"venta/actualizarVenta")
+                svgString = call3.body()?.string() ?: return@launch
+                val call4 = getRetrofit().create(APIService::class.java).generarVenta(ventaResponse,"venta/actualizarVenta")
                 runOnUiThread {
-                    if(call.isSuccessful){
+                    if(call4.isSuccessful){
                         Toast.makeText(this@CarritoActivity, "Venta generada", Toast.LENGTH_SHORT).show()
                         intent = Intent(this@CarritoActivity, HomeActivity::class.java)
                         intent.putExtra("trabajador", trabajador)
                         intent.putExtra("token", token)
                         startActivity(intent)
+                        imprimirComprobante(this@CarritoActivity, svgString, factura)
                     }
                     else{
                         Toast.makeText(this@CarritoActivity, "No se pudo generar la factura", Toast.LENGTH_SHORT).show()
@@ -915,7 +946,7 @@ class CarritoActivity : AppCompatActivity() {
             }
         }
     }
-    private fun imprimirCuentaConImpresoraNormal(context: Context) {
+    private fun imprimirCuenta(context: Context) {
         val printManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
 
         val printAdapter = object : android.print.PrintDocumentAdapter() {
@@ -987,7 +1018,131 @@ class CarritoActivity : AppCompatActivity() {
 
         printManager.print("Cuenta de la mesa: $mesa", printAdapter, null)
     }
+    private fun imprimirComprobante(context: Context,svgString: String, comprobanteBody: comprobanteBody) {
+        val printManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
 
+        val printAdapter = object : PrintDocumentAdapter() {
+            var printAttributes: PrintAttributes? = null
+
+            override fun onLayout(
+                oldAttributes: PrintAttributes?,
+                newAttributes: PrintAttributes?,
+                cancellationSignal: android.os.CancellationSignal?,
+                callback: LayoutResultCallback,
+                extras: Bundle?
+            ) {
+                printAttributes = newAttributes
+                callback.onLayoutFinished(
+                    PrintDocumentInfo.Builder("Boleta_mesa_$mesa.pdf")
+                        .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
+                        .build(),
+                    true
+                )
+            }
+
+            override fun onWrite(
+                pages: Array<PageRange>,
+                destination: ParcelFileDescriptor,
+                cancellationSignal: android.os.CancellationSignal,
+                callback: WriteResultCallback
+            ) {
+                try {
+                    val pdfDocument = PrintedPdfDocument(context, printAttributes!!)
+                    val page = pdfDocument.startPage(0)
+                    val canvas = page.canvas
+
+                    val centerX = canvas.width / 2f
+
+// Paints
+                    val headerPaint = Paint().apply {
+                        textSize = 18f
+                        isFakeBoldText = true
+                        textAlign = Paint.Align.CENTER
+                    }
+
+                    val normalCenterPaint = Paint().apply {
+                        textSize = 12f
+                        textAlign = Paint.Align.CENTER
+                    }
+
+                    val normalLeftPaint = Paint().apply {
+                        textSize = 12f
+                        textAlign = Paint.Align.LEFT
+                    }
+
+                    var y = 50f
+
+// Parte centrada
+                    canvas.drawText("El Limón y su Causa", centerX, y, headerPaint)
+                    y += 25f
+                    canvas.drawText("Los Diamantes 486 - Trujillo, La Libertad", centerX, y, normalCenterPaint)
+                    y += 20f
+                    canvas.drawText("R.U.C. 10295835465", centerX, y, normalCenterPaint)
+                    y += 20f
+
+                    val tipoDocTexto = if (comprobanteBody.tipoDoc == "03") "Boleta de Venta Electrónica" else "Factura de Venta Electrónica"
+                    canvas.drawText(tipoDocTexto, centerX, y, normalCenterPaint)
+                    y += 20f
+                    canvas.drawText("Serie: ${comprobanteBody.serie}  Correlativo: ${comprobanteBody.correlativo}", centerX, y, normalCenterPaint)
+                    y += 20f
+                    val fecha = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                    canvas.drawText("Fecha: $fecha", centerX, y, normalCenterPaint)
+                    y += 20f
+                    canvas.drawText("Vendedor: ${trabajador.nombreTrabajador} ${trabajador.apellidoTrabajador}", centerX, y, normalCenterPaint)
+                    y += 20f
+
+                    val startX = 40f
+                    val endX = canvas.width.toFloat() - 40f
+                    canvas.drawLine(startX, y, endX, y, normalLeftPaint)
+                    y += 25f
+
+                    for (item in item2) {
+                        val line = "1 x ${item.producto.nombreProducto} - S/.${"%.2f".format(item.producto.precioProducto)}"
+                        canvas.drawText(line, 40f, y, normalLeftPaint)
+                        y += 20f
+                    }
+
+                    y += 15f
+                    canvas.drawText("SUBTOTAL: S/.${"%.2f".format(comprobanteBody.mtoOperGravadas)}", 40f, y, normalLeftPaint)
+                    y += 20f
+                    canvas.drawText("I.G.V.(18%): S/.${"%.2f".format(comprobanteBody.mtoIGV)}", 40f, y, normalLeftPaint)
+                    y += 20f
+                    canvas.drawText("TOTAL: S/.${"%.2f".format(totalPedido)}", 40f, y, normalLeftPaint)
+                    y += 30f
+
+                    val svg = com.caverock.androidsvg.SVG.getFromString(svgString)
+                    val qrSize = 100
+                    val bitmap = Bitmap.createBitmap(qrSize, qrSize, Bitmap.Config.ARGB_8888)
+                    val bmpCanvas = Canvas(bitmap)
+                    svg.setDocumentWidth(qrSize.toFloat())
+                    svg.setDocumentHeight(qrSize.toFloat())
+                    svg.renderToCanvas(bmpCanvas)
+
+                    val qrX = centerX - (qrSize / 2f)
+                    canvas.drawBitmap(bitmap, qrX, y, null)
+                    y += (qrSize + 20)
+
+                    canvas.drawText("Representación impresa del comprobante", centerX, y, normalCenterPaint)
+                    y += 15f
+                    canvas.drawText("consulte su comprobante en www.ejemplo.com", centerX, y, normalCenterPaint)
+
+
+                    pdfDocument.finishPage(page)
+
+                    val output = FileOutputStream(destination.fileDescriptor)
+                    pdfDocument.writeTo(output)
+                    pdfDocument.close()
+
+                    callback.onWriteFinished(arrayOf(PageRange.ALL_PAGES))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    callback.onWriteFailed(e.message)
+                }
+            }
+        }
+
+        printManager.print("Boleta Mesa $mesa", printAdapter, null)
+    }
 }
 
 

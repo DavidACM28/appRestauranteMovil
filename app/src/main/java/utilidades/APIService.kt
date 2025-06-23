@@ -11,6 +11,7 @@ import entidades.venta
 import entidades.ventaResponse
 import entidadesPago.comprobanteBody
 import entidadesPago.comprobanteSuccessResponse
+import entidadesPago.generarQRBody
 import entidadesPago.login
 import entidadesPago.loginBoletaResponse
 import okhttp3.ResponseBody
@@ -54,4 +55,6 @@ interface APIService {
     suspend fun generarVenta(@Body venta: ventaResponse, @Url url:String):Response<Unit>
     @POST
     suspend fun actualizarVarios(@Body detalles: List<detalleResponse>, @Url url:String):Response<Unit>
+    @POST
+    suspend fun generarQR(@Body body: generarQRBody, @Url url: String):Response<ResponseBody>
 }

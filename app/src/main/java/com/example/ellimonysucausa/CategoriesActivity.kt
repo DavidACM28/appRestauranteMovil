@@ -200,7 +200,7 @@ class CategoriesActivity : AppCompatActivity() {
                         val body2:pedidoResponse? = call2.body()
                         if (body2 != null){
                             pedido = body2
-                            if (body2.estadoPedido!!.idEstadoPedido != 10)
+                            if (body2.estadoPedido!!.idEstadoPedido != 10 && body2.estadoPedido!!.idEstadoPedido != 13)
                                 tienePedido = true
                         }
                     }
