@@ -39,7 +39,10 @@ class HomeActivity : AppCompatActivity() {
 
         // 3. Bottom Navigation Actions
         findViewById<ImageButton>(R.id.btnUser).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
+            intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("trabajador", trabajador)
+            intent.putExtra("token", token)
+            startActivity(intent)
         }
 
         findViewById<ImageButton>(R.id.btnCategories).setOnClickListener {
@@ -49,21 +52,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<ImageButton>(R.id.btnHome).setOnClickListener {
-            // Ya estamos en Home, no hacemos nada o recargamos
-        }
-
         findViewById<ImageButton>(R.id.btnCart).setOnClickListener {
             intent = Intent(this, CarritoActivity::class.java)
             intent.putExtra("trabajador", trabajador)
             intent.putExtra("token", token)
             startActivity(intent)
         }
-
-        findViewById<ImageButton>(R.id.btnSettings).setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
     }
 
 }

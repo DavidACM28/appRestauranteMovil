@@ -18,6 +18,7 @@ import android.print.PrintDocumentAdapter
 import android.print.PrintDocumentInfo
 import android.print.PrintManager
 import android.print.pdf.PrintedPdfDocument
+import android.provider.ContactsContract.Profile
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -216,6 +217,12 @@ class CarritoActivity : AppCompatActivity() {
             intent.putExtra("trabajador", trabajador)
             intent.putExtra("token", token)
             intent.putExtra("mesa", mesa)
+            startActivity(intent)
+        }
+        binding.btnUser.setOnClickListener(){
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("token", token)
+            intent.putExtra("trabajador", trabajador)
             startActivity(intent)
         }
         binding.btnEnviar.setOnClickListener(){

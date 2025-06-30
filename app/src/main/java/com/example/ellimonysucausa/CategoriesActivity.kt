@@ -143,7 +143,7 @@ class CategoriesActivity : AppCompatActivity() {
             recyclerViewAdapter.notifyDataSetChanged()
         }
         binding.btnHome.setOnClickListener(){
-            var intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             intent.putExtra("token", token)
             intent.putExtra("trabajador", trabajador)
             startActivity(intent)
@@ -153,6 +153,12 @@ class CategoriesActivity : AppCompatActivity() {
             intent.putExtra("token", token)
             intent.putExtra("trabajador", trabajador)
             intent.putExtra("mesa", mesa)
+            startActivity(intent)
+        }
+        binding.btnUser.setOnClickListener(){
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("token", token)
+            intent.putExtra("trabajador", trabajador)
             startActivity(intent)
         }
     }
