@@ -484,10 +484,10 @@ class CarritoActivity : AppCompatActivity() {
     }
     private fun actualizarEstado2(id:Int){
         CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch{
-            val call =getRetrofit().create(APIService::class.java).eliminarDetale("detalle/actualizarEstado2/${id}")
-            createData3(mesa)
+            val call =getRetrofit().create(APIService::class.java).actualizarEstado2("detalle/actualizarEstado2/${id}")
             runOnUiThread {
                 if(call.isSuccessful){
+                    createData3(mesa)
                     Toast.makeText(this@CarritoActivity, "Entrega confirmada correctamente", Toast.LENGTH_SHORT).show()
                 }
             }

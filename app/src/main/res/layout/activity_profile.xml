@@ -16,7 +16,7 @@
         android:id="@+id/tvTitulo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         android:text="Mi Perfil"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4.15"
+        android:layout_weight="4.05"
         android:paddingHorizontal="25dp">
         <TextView
             android:id="@+id/tvNombre"

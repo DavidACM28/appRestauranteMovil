@@ -42,6 +42,8 @@ interface APIService {
     @POST
     suspend fun actualizarEstado(@Url url: String):Response<Unit>
     @POST
+    suspend fun actualizarEstado2(@Url url: String):Response<Unit>
+    @POST
     suspend fun eliminarDetale(@Url url: String):Response<Int>
     @GET
     suspend fun consultarDocumento(@Url url: String):Response<ResponseBody>

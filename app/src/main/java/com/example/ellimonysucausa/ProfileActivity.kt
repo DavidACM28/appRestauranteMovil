@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ellimonysucausa.databinding.ActivityProfileBinding
@@ -19,6 +20,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         sharedPreferences = getSharedPreferences("loginref", MODE_PRIVATE)
         val trabajador = intent.getSerializableExtra("trabajador", trabajador::class.java)
         val token = intent.getStringExtra("token")
