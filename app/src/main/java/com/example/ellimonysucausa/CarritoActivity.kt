@@ -204,8 +204,8 @@ class CarritoActivity : AppCompatActivity() {
                 eliminarDetalle(idDetalle, idPedido, precioProducto)
         }
         btnConfirmar.setOnClickListener(){
-            actualizarEstado2(idDetalle)
             dialog2.hide()
+            actualizarEstado2(idDetalle)
         }
         binding.btnHome.setOnClickListener(){
             intent = Intent(this, HomeActivity::class.java)
